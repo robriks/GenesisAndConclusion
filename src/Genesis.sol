@@ -9,7 +9,7 @@ import "./IGenesisRenderer.sol";
 contract Genesis is ERC721, Ownable {
     error AlreadyMinted();
     error TokenDoesNotExist();
-    error MergeHasNotOccured();
+    error MergeHasNotOccurred();
 
     struct MintInfo {
         uint128 blockNum;
@@ -37,7 +37,7 @@ contract Genesis is ERC721, Ownable {
 
     function mint() external onlyEOA {
         if (mintedBlocks[tx.origin] > 0) revert AlreadyMinted();
-        if (!mergeHasOccured()) revert MergeHasNotOccured();
+        if (!mergeHasOccurred()) revert MergeHasNotOccurred();
 
         checkForMergeAndUpdate();
 
@@ -57,12 +57,12 @@ contract Genesis is ERC721, Ownable {
     }
 
     function checkForMergeAndUpdate() public {
-        if (genesisMergeBlock == 0 && mergeHasOccured()) {
+        if (genesisMergeBlock == 0 && mergeHasOccurred()) {
             genesisMergeBlock = block.number;
         }
     }
 
-    function mergeHasOccured() public view returns (bool) {
+    function mergeHasOccurred() public view returns (bool) {
         return block.difficulty > 2**64 || block.difficulty == 0;
     }
 
